@@ -6,11 +6,12 @@ import json
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app)
 
-NUMBER_RETURNED = 10
+NUMBER_RETURNED = 20
 
 class PredictKanji(Resource):
+    def get(self):
+        return {"numReturned": NUMBER_RETURNED}
     def post(self):
         data = request.get_json(force=True)
         uri = data['data']
@@ -19,7 +20,14 @@ class PredictKanji(Resource):
         response = jsonify(results)
         return response
 
-api.add_resource(PredictKanji, "/")
+class HelloWorld(Resource):
+    def get(self):
+        return {"message": "Hello World!"}
+
+api.add_resource(PredictKanji, "/api/recognize", endpoint="recognize")
+api.add_resource(HelloWorld, "/", endpoint="hello")
+
+CORS(app)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(ssl_context=('/etc/letsencrypt/live/sicfran.xyz/fullchain.pem', '/etc/letsencrypt/live/sicfran.xyz/privkey.pem'))
