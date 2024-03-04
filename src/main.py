@@ -3,7 +3,7 @@ from flask_restful import Api, Resource
 from predict import Predictor
 from flask_cors import CORS
 import json
-from send_email import separate_accounts
+from send_email import EmailDriver
 
 app = Flask(__name__)
 api = Api(app)
@@ -23,11 +23,13 @@ class PredictKanji(Resource):
     
 class Emailer(Resource):
     def get(self):
-        separate_accounts()
-        return {"status": "Sent emails."}
+        email_driver = EmailDriver()
+        results = email_driver.separate_accounts()
+        response = jsonify(results)
+        return response
 
 api.add_resource(PredictKanji, "/api/recognize")
-api.add_resource(Emailer, "api/emailer")
+api.add_resource(Emailer, "/api/emailer")
 
 CORS(app)
 
