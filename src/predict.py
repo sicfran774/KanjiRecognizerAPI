@@ -42,7 +42,7 @@ class Predictor():
         """
 
         # load model
-        path_to_model = "../../model/tflite/model.tflite"
+        path_to_model = "../model/model.tflite"
         self.kanji_interpreter = tf.lite.Interpreter(model_path=path_to_model)
         self.kanji_interpreter.allocate_tensors()
 

@@ -1,0 +1,5 @@
+__pycache__/
+.env
+cert.pem
+certs.txt
+key.pem
